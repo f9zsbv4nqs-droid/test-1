@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Schleifstüberl – Gasthof & Restaurant · Wien Floridsdorf</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & TOKENS ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream:    #f5f0e8;
+  --cream2:   #ede6d6;
+  --paper:    #faf7f2;
+  --ink:      #1c1410;
+  --ink2:     #3d2f22;
+  --ink3:     #6b5744;
+  --rust:     #b84a2f;
+  --rust2:    #8f3520;
+  --gold:     #c9903a;
+  --gold2:    #a87328;
+  --green:    #3a5c35;
+  --border:   rgba(60,40,20,.14);
+  --shadow:   0 4px 24px rgba(28,20,16,.1);
+  --display:  'Playfair Display', Georgia, serif;
+  --body:     'Source Sans 3', system-ui, sans-serif;
+  --r:        4px;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--body);
+  background: var(--paper);
+  color: var(--ink2);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── TYPOGRAPHY ── */
+h1,h2,h3,h4 { font-family: var(--display); color: var(--ink); }
+p { color: var(--ink3); }
+
+/* ── NAV ── */
+#nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 0 5vw;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 72px;
+  background: rgba(250,247,242,.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  transition: box-shadow .3s;
+}
+#nav.scrolled { box-shadow: 0 2px 20px rgba(28,20,16,.1); }
+
+.nav-brand {
+  font-family: var(--display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: -.3px;
+}
+.nav-brand span { color: var(--rust); }
+
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a {
+  font-size: 14px; font-weight: 500; letter-spacing: .3px;
+  color: var(--ink3); text-decoration: none; text-transform: uppercase;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--rust); }
+
+.nav-cta {
+  background: var(--rust); color: #fff;
+  font-size: 13px; font-weight: 600; letter-spacing: .5px;
+  text-transform: uppercase; text-decoration: none;
+  padding: 10px 20px; border-radius: var(--r);
+  transition: background .2s, transform .15s;
+}
+.nav-cta:hover { background: var(--rust2); transform: translateY(-1px); }
+
+/* hamburger */
+.ham { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+.ham span { width: 24px; height: 2px; background: var(--ink2); border-radius: 2px; transition: .3s; }
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding: 120px 5vw 80px;
+  position: relative;
+  overflow: hidden;
+  background: var(--ink);
+}
+
+/* textured background pattern */
+#hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 65% 50%, rgba(184,74,47,.18) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 80% at 10% 80%, rgba(201,144,58,.12) 0%, transparent 60%);
+}
+
+/* grain texture */
+#hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+  background-size: 180px;
+  opacity: .5;
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative; z-index: 1;
+  max-width: 620px;
+}
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 32px; height: 1px; background: var(--gold);
+}
+
+.hero-title {
+  font-family: var(--display);
+  font-size: clamp(46px, 7vw, 82px);
+  font-weight: 900;
+  line-height: 1.0;
+  color: var(--cream);
+  letter-spacing: -1.5px;
+  margin-bottom: 12px;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--rust);
+}
+
+.hero-sub {
+  font-size: 17px; font-weight: 300;
+  color: rgba(245,240,232,.65);
+  line-height: 1.7;
+  max-width: 480px;
+  margin-bottom: 40px;
+}
+
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--rust); color: #fff;
+  font-size: 14px; font-weight: 600; letter-spacing: .4px;
+  text-decoration: none; padding: 14px 28px; border-radius: var(--r);
+  transition: background .2s, transform .15s, box-shadow .2s;
+  box-shadow: 0 4px 20px rgba(184,74,47,.35);
+}
+.btn-primary:hover { background: var(--rust2); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(184,74,47,.45); }
+
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent; color: var(--cream);
+  font-size: 14px; font-weight: 500; letter-spacing: .3px;
+  text-decoration: none; padding: 14px 28px; border-radius: var(--r);
+  border: 1px solid rgba(245,240,232,.25);
+  transition: border-color .2s, background .2s;
+}
+.btn-ghost:hover { border-color: rgba(245,240,232,.55); background: rgba(245,240,232,.06); }
+
+.hero-badges {
+  margin-top: 52px;
+  display: flex; gap: 32px; flex-wrap: wrap;
+}
+.hero-badge {
+  display: flex; flex-direction: column; gap: 2px;
+}
+.hb-num {
+  font-family: var(--display); font-size: 28px; font-weight: 700;
+  color: var(--cream); letter-spacing: -.5px;
+}
+.hb-lbl { font-size: 12px; color: rgba(245,240,232,.5); text-transform: uppercase; letter-spacing: 1px; }
+
+/* decorative plate */
+.hero-deco {
+  position: absolute; right: 5vw; top: 50%; transform: translateY(-50%);
+  width: clamp(280px, 38vw, 520px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1;
+}
+.hero-deco svg { width: 100%; height: auto; opacity: .85; }
+
+/* ── DIVIDER ── */
+.ornament {
+  text-align: center; padding: 12px 0;
+  color: var(--gold2); font-size: 20px; letter-spacing: 8px;
+}
+
+/* ── SECTION BASE ── */
+section { padding: 88px 5vw; }
+
+.section-label {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--rust);
+  margin-bottom: 14px;
+}
+.section-label::before { content: ''; width: 24px; height: 1px; background: var(--rust); }
+
+.section-title {
+  font-family: var(--display);
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.15;
+  letter-spacing: -.5px;
+  margin-bottom: 16px;
+}
+
+/* ── ÜBER UNS ── */
+#about { background: var(--cream); }
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  max-width: 1100px;
+}
+
+.about-text p { margin-bottom: 16px; font-size: 16px; line-height: 1.75; }
+
+.about-img {
+  position: relative;
+  border-radius: 2px;
+}
+
+/* woodgrain decorative box */
+.wood-box {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(160deg, #3d2a1a 0%, #5c3d25 40%, #2e1f12 100%);
+  box-shadow: var(--shadow), inset 0 0 0 1px rgba(255,255,255,.06);
+}
+
+.wood-box::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    88deg,
+    transparent 0px,
+    rgba(255,255,255,.025) 1px,
+    transparent 2px,
+    transparent 8px
+  );
+}
+
+.wood-inner {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 14px; padding: 32px;
+}
+
+.wi-icon { font-size: 56px; filter: drop-shadow(0 4px 12px rgba(0,0,0,.4)); }
+.wi-text {
+  font-family: var(--display); font-size: 22px; font-weight: 700;
+  color: var(--cream); text-align: center; line-height: 1.3;
+  text-shadow: 0 2px 8px rgba(0,0,0,.5);
+}
+.wi-sub { font-size: 13px; color: rgba(245,240,232,.55); text-align: center; letter-spacing: 1.5px; text-transform: uppercase; }
+
+.about-offset {
+  position: absolute;
+  bottom: -20px; right: -20px;
+  width: 60%; height: 60%;
+  background: var(--rust);
+  border-radius: 2px;
+  z-index: -1;
+  opacity: .15;
+}
+
+/* quote block */
+.quote-block {
+  margin-top: 32px;
+  padding: 20px 24px;
+  border-left: 3px solid var(--gold);
+  background: rgba(201,144,58,.07);
+  border-radius: 0 var(--r) var(--r) 0;
+}
+.quote-block p {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 17px;
+  color: var(--ink2);
+  line-height: 1.6;
+  margin: 0;
+}
+.quote-block cite { display: block; margin-top: 8px; font-size: 12px; color: var(--ink3); font-style: normal; letter-spacing: .5px; }
+
+/* ── SPEISEKARTE ── */
+#menu { background: var(--paper); }
+
+.menu-header { max-width: 600px; margin-bottom: 56px; }
+
+.menu-tabs {
+  display: flex; gap: 4px; flex-wrap: wrap;
+  margin-bottom: 48px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0;
+}
+.tab-btn {
+  font-size: 13px; font-weight: 500; letter-spacing: .3px;
+  color: var(--ink3); background: none; border: none; cursor: pointer;
+  padding: 12px 20px;
+  position: relative; bottom: -1px;
+  border-bottom: 2px solid transparent;
+  transition: color .2s, border-color .2s;
+  font-family: var(--body);
+}
+.tab-btn:hover { color: var(--rust); }
+.tab-btn.active { color: var(--rust); border-bottom-color: var(--rust); font-weight: 600; }
+
+.menu-panel { display: none; }
+.menu-panel.active { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
+
+.menu-item {
+  background: var(--paper);
+  padding: 20px 22px;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+  transition: background .2s;
+}
+.menu-item:hover { background: var(--cream); }
+
+.mi-left { flex: 1; }
+.mi-name { font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+.mi-desc { font-size: 13px; color: var(--ink3); line-height: 1.5; }
+.mi-badges { display: flex; gap: 5px; margin-top: 6px; flex-wrap: wrap; }
+.mi-badge {
+  font-size: 10px; font-weight: 600; letter-spacing: .3px;
+  padding: 2px 7px; border-radius: 20px; text-transform: uppercase;
+}
+.mi-badge.veg { background: rgba(58,92,53,.1); color: var(--green); }
+.mi-badge.fav { background: rgba(184,74,47,.1); color: var(--rust); }
+.mi-badge.daily { background: rgba(201,144,58,.12); color: var(--gold2); }
+.mi-price {
+  font-family: var(--display); font-size: 17px; font-weight: 700;
+  color: var(--ink); white-space: nowrap; flex-shrink: 0;
+}
+
+/* ── ÖFFNUNGSZEITEN ── */
+#hours {
+  background: var(--ink);
+  color: var(--cream);
+  position: relative; overflow: hidden;
+}
+#hours::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(201,144,58,.12) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.hours-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 56px;
+  position: relative; z-index: 1;
+  max-width: 1000px;
+}
+
+.hours-grid .section-label { color: var(--gold); }
+.hours-grid .section-label::before { background: var(--gold); }
+.hours-grid .section-title { color: var(--cream); }
+
+.hours-table { margin-top: 24px; }
+.hours-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(245,240,232,.08);
+}
+.hours-row:last-child { border-bottom: none; }
+.hr-day { font-size: 14px; color: rgba(245,240,232,.65); }
+.hr-time { font-size: 14px; font-weight: 500; color: var(--cream); font-family: var(--display); }
+.hr-time.closed { color: rgba(245,240,232,.3); }
+
+.today-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600;
+  background: rgba(58,92,53,.25); color: #7ec97a;
+  border: 1px solid rgba(126,201,122,.2);
+  padding: 4px 12px; border-radius: 20px;
+  margin-top: 4px;
+}
+.today-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #7ec97a; }
+
+.contact-block { margin-top: 24px; display: flex; flex-direction: column; gap: 14px; }
+.contact-item { display: flex; align-items: flex-start; gap: 14px; }
+.ci-icon {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: rgba(245,240,232,.07);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0;
+}
+.ci-label { font-size: 11px; color: rgba(245,240,232,.4); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 2px; }
+.ci-val { font-size: 14px; color: var(--cream); font-weight: 500; }
+.ci-val a { color: var(--cream); text-decoration: none; }
+.ci-val a:hover { color: var(--gold); }
+
+.map-embed {
+  border-radius: var(--r);
+  overflow: hidden;
+  border: 1px solid rgba(245,240,232,.1);
+  height: 200px;
+  background: rgba(245,240,232,.05);
+  display: flex; align-items: center; justify-content: center;
+}
+.map-link-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 600;
+  color: var(--cream);
+  background: rgba(245,240,232,.08);
+  border: 1px solid rgba(245,240,232,.15);
+  padding: 10px 18px; border-radius: var(--r);
+  text-decoration: none; margin-top: 12px;
+  transition: background .2s;
+}
+.map-link-btn:hover { background: rgba(245,240,232,.14); }
+
+/* ── BEWERTUNGEN ── */
+#reviews { background: var(--cream2); }
+
+.reviews-intro {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 48px; flex-wrap: wrap; gap: 24px;
+}
+.rating-big {
+  display: flex; align-items: center; gap: 16px;
+}
+.rb-num {
+  font-family: var(--display); font-size: 64px; font-weight: 900;
+  color: var(--ink); line-height: 1; letter-spacing: -2px;
+}
+.rb-stars { font-size: 20px; letter-spacing: 2px; }
+.rb-count { font-size: 13px; color: var(--ink3); margin-top: 4px; }
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+.review-card {
+  background: var(--paper);
+  border-radius: var(--r);
+  padding: 22px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 8px rgba(28,20,16,.05);
+  display: flex; flex-direction: column; gap: 12px;
+}
+.rc-stars { font-size: 14px; letter-spacing: 1px; }
+.rc-text { font-size: 14px; color: var(--ink3); line-height: 1.65; flex: 1; }
+.rc-author { font-size: 12px; font-weight: 600; color: var(--ink2); text-transform: uppercase; letter-spacing: .5px; }
+
+/* ── FOOTER ── */
+footer {
+  background: #120d09;
+  padding: 56px 5vw 32px;
+  color: rgba(245,240,232,.5);
+}
+.footer-top {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  flex-wrap: wrap; gap: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(245,240,232,.08);
+  margin-bottom: 32px;
+}
+.footer-brand {
+  font-family: var(--display); font-size: 22px; font-weight: 700;
+  color: var(--cream); margin-bottom: 8px;
+}
+.footer-brand span { color: var(--rust); }
+.footer-tagline { font-size: 13px; max-width: 240px; line-height: 1.6; }
+.footer-links { display: flex; gap: 48px; flex-wrap: wrap; }
+.fl-group h4 { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(245,240,232,.3); margin-bottom: 14px; }
+.fl-group ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.fl-group a { font-size: 14px; color: rgba(245,240,232,.55); text-decoration: none; transition: color .2s; }
+.fl-group a:hover { color: var(--cream); }
+.footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: 12px; }
+
+/* ── MOBILE NAV DRAWER ── */
+#mobileNav {
+  display: none;
+  position: fixed; inset: 0; z-index: 99;
+  background: var(--paper);
+  flex-direction: column; align-items: center; justify-content: center;
+  gap: 32px;
+}
+#mobileNav.open { display: flex; }
+#mobileNav a {
+  font-family: var(--display); font-size: 28px; font-weight: 700;
+  color: var(--ink); text-decoration: none;
+  transition: color .2s;
+}
+#mobileNav a:hover { color: var(--rust); }
+.mnav-close {
+  position: absolute; top: 20px; right: 24px;
+  font-size: 28px; background: none; border: none; cursor: pointer; color: var(--ink3);
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width: 860px) {
+  .nav-links, .nav-cta { display: none; }
+  .ham { display: flex; }
+
+  .hero-deco { display: none; }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .hours-grid { grid-template-columns: 1fr; gap: 48px; }
+  .footer-links { gap: 32px; }
+}
+@media(max-width: 520px) {
+  section { padding: 64px 5vw; }
+  .hero-badges { gap: 24px; }
+  .reviews-intro { align-items: flex-start; }
+}
+
+/* ── SCROLL ANIMATIONS ── */
+.fade-in { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- ══════ NAV ══════ -->
+<nav id="nav">
+  <a class="nav-brand" href="#hero">Schlei<span>f</span>stüberl</a>
+  <ul class="nav-links">
+    <li><a href="#about">Über uns</a></li>
+    <li><a href="#menu">Speisekarte</a></li>
+    <li><a href="#hours">Öffnungszeiten</a></li>
+    <li><a href="#reviews">Bewertungen</a></li>
+  </ul>
+  <a class="nav-cta" href="tel:067763506836">Anrufen</a>
+  <button class="ham" id="hamBtn" aria-label="Menü öffnen">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Nav -->
+<div id="mobileNav">
+  <button class="mnav-close" id="mnavClose">✕</button>
+  <a href="#about" onclick="closeMnav()">Über uns</a>
+  <a href="#menu" onclick="closeMnav()">Speisekarte</a>
+  <a href="#hours" onclick="closeMnav()">Öffnungszeiten</a>
+  <a href="#reviews" onclick="closeMnav()">Bewertungen</a>
+  <a class="btn-primary" href="tel:067763506836">Jetzt anrufen</a>
+</div>
+
+<!-- ══════ HERO ══════ -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Wien · 1210 Floridsdorf</div>
+    <h1 class="hero-title">Echt. Herzlich.<br><em>Wienerisch.</em></h1>
+    <p class="hero-sub">Das Schleifstüberl — Ihr gemütliches Stammlokal im Herzen von Floridsdorf. Bodenständige Küche, großzügige Portionen und das Flair eines echten Wiener Gasthofs.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#menu">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2h18l-2 12H5L3 2z"/><path d="M3 2L2 1"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/></svg>
+        Speisekarte
+      </a>
+      <a class="btn-ghost" href="#hours">Öffnungszeiten</a>
+    </div>
+    <div class="hero-badges">
+      <div class="hero-badge"><span class="hb-num">4,4★</span><span class="hb-lbl">Bewertung</span></div>
+      <div class="hero-badge"><span class="hb-num">38+</span><span class="hb-lbl">Rezensionen</span></div>
+      <div class="hero-badge"><span class="hb-num">tägl.</span><span class="hb-lbl">geöffnet</span></div>
+    </div>
+  </div>
+
+  <!-- Decorative SVG illustration -->
+  <div class="hero-deco">
+    <svg viewBox="0 0 400 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- plate -->
+      <ellipse cx="200" cy="220" rx="155" ry="18" fill="rgba(245,240,232,.06)"/>
+      <circle cx="200" cy="190" r="148" fill="rgba(245,240,232,.04)" stroke="rgba(245,240,232,.08)" stroke-width="1"/>
+      <circle cx="200" cy="190" r="120" fill="rgba(245,240,232,.05)" stroke="rgba(245,240,232,.1)" stroke-width="1"/>
+      <!-- fork -->
+      <rect x="96" y="80" width="4" height="100" rx="2" fill="rgba(201,144,58,.55)"/>
+      <rect x="90" y="80" width="2" height="40" rx="1" fill="rgba(201,144,58,.4)"/>
+      <rect x="102" y="80" width="2" height="40" rx="1" fill="rgba(201,144,58,.4)"/>
+      <!-- knife -->
+      <rect x="300" y="80" width="4" height="100" rx="2" fill="rgba(201,144,58,.55)"/>
+      <path d="M304 80 Q312 120 304 160" stroke="rgba(201,144,58,.4)" stroke-width="2" fill="none"/>
+      <!-- food / strudel -->
+      <ellipse cx="200" cy="190" rx="70" ry="50" fill="rgba(184,74,47,.2)" stroke="rgba(184,74,47,.35)" stroke-width="1.5"/>
+      <path d="M145 185 Q170 165 200 170 Q230 175 255 185 Q230 200 200 195 Q170 190 145 185z" fill="rgba(201,144,58,.3)"/>
+      <ellipse cx="200" cy="183" rx="38" ry="22" fill="rgba(245,240,232,.12)" stroke="rgba(245,240,232,.2)" stroke-width="1"/>
+      <!-- steam lines -->
+      <path d="M175 130 Q172 118 175 106 Q178 94 175 82" stroke="rgba(245,240,232,.25)" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M200 125 Q197 113 200 101 Q203 89 200 77" stroke="rgba(245,240,232,.2)" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M225 130 Q222 118 225 106 Q228 94 225 82" stroke="rgba(245,240,232,.25)" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <!-- stars -->
+      <circle cx="320" cy="60" r="2" fill="rgba(201,144,58,.6)"/>
+      <circle cx="340" cy="90" r="1.5" fill="rgba(201,144,58,.4)"/>
+      <circle cx="75" cy="70" r="2" fill="rgba(201,144,58,.5)"/>
+      <circle cx="55" cy="100" r="1.5" fill="rgba(201,144,58,.35)"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ══════ ÜBER UNS ══════ -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text fade-in">
+      <div class="section-label">Unser Lokal</div>
+      <h2 class="section-title">Ein Stück echtes Wien in Floridsdorf</h2>
+      <p>Das Schleifstüberl in der Schleifgasse 10 ist mehr als ein Restaurant — es ist ein Ort, an dem sich Nachbarn treffen, Stammgäste zu Familie werden und die Küche noch echte Hausmannskost bedeutet.</p>
+      <p>Mit serbokroatischen Einflüssen und Wiener Traditionen bieten wir eine Küche, die Sie so in Wien selten finden: reichhaltige Portionen, frische Zutaten, und ein Koch, der gerne Kontakt zu seinen Gästen hält.</p>
+      <p>Ob zum Mittagessen unter der Woche, zum gemütlichen Abendessen oder für ein Getränk im Garten — wir freuen uns auf Ihren Besuch.</p>
+      <div class="quote-block">
+        <p>„Serbokroatisches Lokal, etwas rustikal aber sauber, mit vorzüglicher Küche und moderaten Preisen. Reichliche Portionen, freundliche Bedienung."</p>
+        <cite>— Gast-Bewertung</cite>
+      </div>
+    </div>
+    <div class="about-img fade-in">
+      <div class="wood-box">
+        <div class="wood-inner">
+          <div class="wi-icon">🍽️</div>
+          <div class="wi-text">Schleifstüberl<br>M&M Restaurant</div>
+          <div class="wi-sub">Seit Jahren · Wien 1210</div>
+        </div>
+      </div>
+      <div class="about-offset"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ SPEISEKARTE ══════ -->
+<section id="menu">
+  <div class="menu-header fade-in">
+    <div class="section-label">Speisekarte</div>
+    <h2 class="section-title">Hausgemacht mit Herz</h2>
+    <p>Bodenständige Küche mit Wiener und balkanischen Spezialitäten. Tagesmenüs von Montag bis Freitag 11–21 Uhr.</p>
+  </div>
+
+  <div class="menu-tabs fade-in">
+    <button class="tab-btn active" onclick="showTab('vorspeisen',this)">Vorspeisen</button>
+    <button class="tab-btn" onclick="showTab('hauptspeisen',this)">Hauptspeisen</button>
+    <button class="tab-btn" onclick="showTab('grill',this)">Vom Grill</button>
+    <button class="tab-btn" onclick="showTab('suppen',this)">Suppen</button>
+    <button class="tab-btn" onclick="showTab('tagesmenu',this)">Tagesmenü</button>
+    <button class="tab-btn" onclick="showTab('getraenke',this)">Getränke</button>
+  </div>
+
+  <div id="tab-vorspeisen" class="menu-panel active">
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Hausgemachte Ajvar</div><div class="mi-desc">Geröstetes Paprikamark mit Brot</div><div class="mi-badges"><span class="mi-badge veg">Vegetarisch</span><span class="mi-badge fav">Beliebt</span></div></div><div class="mi-price">€ 4,90</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Gemischter Salat</div><div class="mi-desc">Saisonales Blattsalat-Sortiment mit Hausbeize</div><div class="mi-badges"><span class="mi-badge veg">Vegetarisch</span></div></div><div class="mi-price">€ 5,50</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Urnebes</div><div class="mi-desc">Serbischer Frischkäse-Aufstrich mit Chili und Brot</div><div class="mi-badges"><span class="mi-badge fav">Hausrezept</span></div></div><div class="mi-price">€ 5,90</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Kajmak mit Brot</div><div class="mi-desc">Sahniger balkanischer Frischkäse, traditionell gereift</div></div><div class="mi-price">€ 4,50</div></div>
+  </div>
+
+  <div id="tab-hauptspeisen" class="menu-panel">
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Dorade vom Grill</div><div class="mi-desc">Gegrillte Goldbrasse mit Salzkartoffeln und Gemüse</div><div class="mi-badges"><span class="mi-badge fav">Empfehlung</span></div></div><div class="mi-price">€ 18,90</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Wiener Schnitzel</div><div class="mi-desc">Vom Kalb, mit Kartoffelsalat und Preiselbeeren</div><div class="mi-badges"><span class="mi-badge fav">Klassiker</span></div></div><div class="mi-price">€ 16,90</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Hühnerkeule im Brot</div><div class="mi-desc">Hausgemachtes Brot, knusprige Keule, frischer Salat</div></div><div class="mi-price">€ 12,90</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Krautrouladen</div><div class="mi-desc">Gefüllte Kohlrouladen mit Tomatensugo und Brot</div><div class="mi-badges"><span class="mi-badge fav">Hausrezept</span></div></div><div class="mi-price">€ 13,90</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Bohnengulasch</div><div class="mi-desc">Serbische Bohnensuppe als Eintopf, mit Geselchtem</div></div><div class="mi-price">€ 10,90</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Tages-Fischgericht</div><div class="mi-desc">Je nach Saison und Angebot, bitte erfragen</div><div class="mi-badges"><span class="mi-badge daily">Täglich</span></div></div><div class="mi-price">auf Anfrage</div></div>
+  </div>
+
+  <div id="tab-grill" class="menu-panel">
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Ćevapčići (10 Stück)</div><div class="mi-desc">Kleine Hackfleischrollen vom Holzkohlegrill mit Ajvar, Zwiebeln und Brot</div><div class="mi-badges"><span class="mi-badge fav">Spezialität</span></div></div><div class="mi-price">€ 13,90</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Pljeskavica</div><div class="mi-desc">Großes balkanisches Hackfleischlaibchen vom Grill, mit Beilagen</div></div><div class="mi-price">€ 14,50</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Gemischter Grillтeller</div><div class="mi-desc">Ćevapi, Pljeskavica, Roštiljska kobasica, Beilagen</div><div class="mi-badges"><span class="mi-badge fav">Für zwei</span></div></div><div class="mi-price">€ 24,90</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Schweinekotelett vom Grill</div><div class="mi-desc">Mit gegrilltem Gemüse und Rosmarinkartoffeln</div></div><div class="mi-price">€ 15,50</div></div>
+  </div>
+
+  <div id="tab-suppen" class="menu-panel">
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Serbische Bohnensuppe</div><div class="mi-desc">Hausgemacht, reichhaltig, mit Räucherfleisch</div><div class="mi-badges"><span class="mi-badge fav">Hausrezept</span></div></div><div class="mi-price">€ 5,50</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Rindsuppe mit Einlage</div><div class="mi-desc">Klassische Wiener Rindsuppe, mit Nudeln oder Grieß</div></div><div class="mi-price">€ 4,90</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Tagessuppe</div><div class="mi-desc">Wechselt täglich, bitte erfragen</div><div class="mi-badges"><span class="mi-badge daily">Täglich</span></div></div><div class="mi-price">€ 4,50</div></div>
+  </div>
+
+  <div id="tab-tagesmenu" class="menu-panel">
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Mittagsmenü 1</div><div class="mi-desc">Tagessuppe + Hauptspeise nach Wahl (Mo–Fr 11–21 Uhr)</div><div class="mi-badges"><span class="mi-badge daily">Täglich wechselnd</span></div></div><div class="mi-price">ab € 8,90</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Mittagsmenü 2</div><div class="mi-desc">Salat + Hauptspeise nach Wahl, inkl. Getränk</div><div class="mi-badges"><span class="mi-badge daily">Täglich wechselnd</span></div></div><div class="mi-price">ab € 10,50</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Aktuelle Tagesangebote</div><div class="mi-desc">Bitte täglich nachfragen oder auf mittag.at ansehen</div></div><div class="mi-price">variiert</div></div>
+  </div>
+
+  <div id="tab-getraenke" class="menu-panel">
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Hausgemachter Schnaps</div><div class="mi-desc">Šljivovica (Pflaume) oder Loza (Traube), 2 cl</div><div class="mi-badges"><span class="mi-badge fav">Spezialität</span></div></div><div class="mi-price">€ 2,80</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Wein aus ex-YU</div><div class="mi-desc">Hauswein rot / weiß, 0,25 l</div></div><div class="mi-price">€ 3,50</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Bier vom Fass</div><div class="mi-desc">0,5 l</div></div><div class="mi-price">€ 3,90</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Kleine Getränke</div><div class="mi-desc">Wasser, Softdrinks, Säfte</div><div class="mi-badges"><span class="mi-badge veg">Alkoholfrei</span></div></div><div class="mi-price">ab € 2,20</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Kleiner Brauner</div><div class="mi-desc">Espresso mit etwas Milch, Wiener Kaffeehausart</div></div><div class="mi-price">€ 2,60</div></div>
+  </div>
+
+  <p style="margin-top:20px; font-size:13px; color:var(--ink3);">* Preise sind ungefähre Richtwerte. Für aktuelle Preise und Tagesmenüs bitte direkt anfragen oder <a href="https://www.mittag.at/r/schleifstueberl" target="_blank" rel="noopener" style="color:var(--rust);">mittag.at</a> besuchen.</p>
+</section>
+
+<!-- ══════ ÖFFNUNGSZEITEN ══════ -->
+<section id="hours">
+  <div class="hours-grid">
+    <div class="fade-in">
+      <div class="section-label">Öffnungszeiten</div>
+      <h2 class="section-title">Täglich für Sie geöffnet</h2>
+      <div id="todayBadge"></div>
+      <div class="hours-table">
+        <div class="hours-row"><span class="hr-day">Montag – Samstag</span><span class="hr-time">08:00 – 22:00</span></div>
+        <div class="hours-row"><span class="hr-day">Sonntag</span><span class="hr-time">10:00 – 20:00</span></div>
+        <div class="hours-row" style="margin-top:8px; border-top:1px solid rgba(245,240,232,.12); padding-top:16px;">
+          <span class="hr-day" style="font-size:12px;color:rgba(245,240,232,.4)">Mittagsmenü (Mo–Fr)</span>
+          <span class="hr-time" style="font-size:14px;">11:00 – 21:00</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="fade-in">
+      <div class="section-label">Kontakt & Anfahrt</div>
+      <h2 class="section-title">So finden Sie uns</h2>
+      <div class="contact-block">
+        <div class="contact-item">
+          <div class="ci-icon">📍</div>
+          <div>
+            <div class="ci-label">Adresse</div>
+            <div class="ci-val">Schleifgasse 10<br>1210 Wien · Floridsdorf</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon">📞</div>
+          <div>
+            <div class="ci-label">Telefon</div>
+            <div class="ci-val"><a href="tel:067763506836">0677 635 068 36</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon">🌐</div>
+          <div>
+            <div class="ci-label">Website</div>
+            <div class="ci-val"><a href="http://schleifstueberl.simplesite.com" target="_blank" rel="noopener">schleifstueberl.simplesite.com</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon">🚇</div>
+          <div>
+            <div class="ci-label">Öffentlich (2 Min.)</div>
+            <div class="ci-val">U6 Floridsdorf · S-Bahn Floridsdorf<br>Bus 11A, 5A · Straßenbahn 31</div>
+          </div>
+        </div>
+      </div>
+      <a class="map-link-btn" href="https://maps.google.com/?q=Schleifgasse+10,+1210+Wien" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Auf Google Maps öffnen
+      </a>
+    </div>
+
+    <div class="fade-in">
+      <div class="section-label">Parken & Mehr</div>
+      <h2 class="section-title">Gut zu wissen</h2>
+      <div class="contact-block" style="gap:20px;">
+        <div>
+          <div class="ci-label" style="color:rgba(245,240,232,.4);margin-bottom:8px;">🅿️ Parken</div>
+          <div style="font-size:14px;color:rgba(245,240,232,.65);line-height:1.7;">Kurzparkzone in der Umgebung. Kostenloses Parken wenige Minuten zu Fuß erreichbar.</div>
+        </div>
+        <div>
+          <div class="ci-label" style="color:rgba(245,240,232,.4);margin-bottom:8px;">🌿 Schanigarten</div>
+          <div style="font-size:14px;color:rgba(245,240,232,.65);line-height:1.7;">Bei schönem Wetter gemütlicher Außenbereich — perfekt für Sommerabende.</div>
+        </div>
+        <div>
+          <div class="ci-label" style="color:rgba(245,240,232,.4);margin-bottom:8px;">🛵 Lieferung</div>
+          <div style="font-size:14px;color:rgba(245,240,232,.65);line-height:1.7;">Auch über Lieferando erhältlich. Essen kommt immer heiß und frisch an.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ BEWERTUNGEN ══════ -->
+<section id="reviews">
+  <div class="reviews-intro fade-in">
+    <div>
+      <div class="section-label">Gästebewertungen</div>
+      <h2 class="section-title">Was unsere Gäste sagen</h2>
+    </div>
+    <div class="rating-big">
+      <div class="rb-num">4,4</div>
+      <div>
+        <div class="rb-stars">⭐⭐⭐⭐⭐</div>
+        <div class="rb-count">Basierend auf 38 Bewertungen</div>
+      </div>
+    </div>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card fade-in">
+      <div class="rc-stars">⭐⭐⭐⭐⭐</div>
+      <p class="rc-text">„Bin Stammkunde mittels Lieferando und persönlich. Essen immer perfekt und wirklich heiß! Sehr gemütlich im Garten zum Sitzen. Sehr rasche Lieferung und Servierung. Nur zum Weiterempfehlen!"</p>
+      <div class="rc-author">Stammgast · Wien</div>
+    </div>
+    <div class="review-card fade-in">
+      <div class="rc-stars">⭐⭐⭐⭐⭐</div>
+      <p class="rc-text">„Die Gegrillte Dorade mit Salzkartoffel waren einfach lecker. Serbokroatisches Lokal, etwas rustikal aber sauber, mit vorzüglicher Küche und moderaten Preisen."</p>
+      <div class="rc-author">Google-Bewertung</div>
+    </div>
+    <div class="review-card fade-in">
+      <div class="rc-stars">⭐⭐⭐⭐⭐</div>
+      <p class="rc-text">„Reichliche Portionen, freundliche Bedienung und gemütliches Ambiente. Tische nett geschmückt, Koch hält Kontakt zu den Gästen. Ein Blick in die neue Speisekarte lässt das Wasser im Mund zusammenlaufen."</p>
+      <div class="rc-author">Restaurant Guru · Bewertung</div>
+    </div>
+    <div class="review-card fade-in">
+      <div class="rc-stars">⭐⭐⭐⭐⭐</div>
+      <p class="rc-text">„Viele Schmankerl, welche man in Wien sonst nicht findet. Habe mich sehr wohlgefühlt und komme sicher wieder."</p>
+      <div class="rc-author">Gast · Floridsdorf</div>
+    </div>
+    <div class="review-card fade-in">
+      <div class="rc-stars">⭐⭐⭐⭐</div>
+      <p class="rc-text">„Tolle Atmosphäre, echte Wiener Gastlichkeit. Das Schleifstüberl ist genau das, was man in Floridsdorf sucht — bodenständig, herzlich, gut."</p>
+      <div class="rc-author">Lokalgast · 1210 Wien</div>
+    </div>
+    <div class="review-card fade-in" style="background: linear-gradient(135deg, rgba(184,74,47,.05), var(--paper)); border-color: rgba(184,74,47,.18);">
+      <div style="font-family:var(--display); font-size:22px; font-weight:700; color:var(--ink); line-height:1.2; margin-bottom:8px;">Ihr nächster Besuch?</div>
+      <p class="rc-text">Wir freuen uns auf Sie — täglich ab 8:00 Uhr. Für Reservierungen und Fragen rufen Sie uns gerne an.</p>
+      <a class="btn-primary" href="tel:067763506836" style="margin-top:8px; display:inline-flex;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.13 12a19.79 19.79 0 01-3.07-8.67A2 2 0 012.08 1h3a2 2 0 012 1.72 12.8 12.8 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 8.84a16 16 0 006.07 6.07l1.2-1.2a2 2 0 012.11-.45 12.8 12.8 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        Jetzt anrufen
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ FOOTER ══════ -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">Schlei<span>f</span>stüberl</div>
+      <div class="footer-tagline">Ihr gemütliches Stammlokal in Wien Floridsdorf. Herzlich, bodenständig, echt wienerisch.</div>
+    </div>
+    <div class="footer-links">
+      <div class="fl-group">
+        <h4>Lokal</h4>
+        <ul>
+          <li><a href="#about">Über uns</a></li>
+          <li><a href="#menu">Speisekarte</a></li>
+          <li><a href="#hours">Öffnungszeiten</a></li>
+          <li><a href="#reviews">Bewertungen</a></li>
+        </ul>
+      </div>
+      <div class="fl-group">
+        <h4>Kontakt</h4>
+        <ul>
+          <li><a href="tel:067763506836">0677 635 068 36</a></li>
+          <li><a href="https://maps.google.com/?q=Schleifgasse+10,+1210+Wien" target="_blank" rel="noopener">Schleifgasse 10, 1210 Wien</a></li>
+          <li><a href="http://schleifstueberl.simplesite.com" target="_blank" rel="noopener">Website</a></li>
+          <li><a href="https://www.mittag.at/r/schleifstueberl" target="_blank" rel="noopener">Mittagsmenü</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Schleifstüberl M&M Restaurant · Wien</span>
+    <span>Schleifgasse 10 · 1210 Wien · Floridsdorf</span>
+  </div>
+</footer>
+
+<script>
+// ── NAV SCROLL ──
+window.addEventListener('scroll', ()=>{
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10);
+});
+
+// ── MOBILE NAV ──
+document.getElementById('hamBtn').addEventListener('click', ()=>{ document.getElementById('mobileNav').classList.add('open'); });
+document.getElementById('mnavClose').addEventListener('click', ()=>{ document.getElementById('mobileNav').classList.remove('open'); });
+function closeMnav(){ document.getElementById('mobileNav').classList.remove('open'); }
+
+// ── TABS ──
+function showTab(id, btn){
+  document.querySelectorAll('.menu-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── TODAY BADGE ──
+(function(){
+  const d = new Date();
+  const day = d.getDay();
+  const h = d.getHours();
+  const m = d.getMinutes();
+  const now = h * 60 + m;
+  let open = false;
+  if(day === 0){ open = now >= 600 && now < 1200; }
+  else { open = now >= 480 && now < 1320; }
+  const badge = document.getElementById('todayBadge');
+  if(badge){
+    badge.innerHTML = `<div class="today-badge" style="${open?'':'background:rgba(239,68,68,.15);color:#f87171;border-color:rgba(248,113,113,.2);'}">
+      ${open ? 'Jetzt geöffnet' : 'Aktuell geschlossen'}
+    </div>`;
+  }
+})();
+
+// ── SCROLL ANIMATIONS ──
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{ threshold: 0.12 });
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
